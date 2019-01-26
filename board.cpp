@@ -22,7 +22,7 @@ char getLetter(){
     return frequencies[letter_index];
 }
 
-
+// produces random board
 char (*getBoard())[5]{
 
     static char b[5][5];
@@ -33,15 +33,17 @@ char (*getBoard())[5]{
             b[i][j] = getLetter();
         }
     }    
-  //  cout << b;
     return b;
 }
 
+
 int main (){
-    srand (time(NULL)); //initialize random seed
+
+    srand (time(NULL)); // initializes random seed
     char (*p)[5];
     p = getBoard();
 
+    // prints board
     int i, j;
     for (i = 0; i < 5; i++){
         for (j = 0; j < 5; j++){
@@ -49,6 +51,5 @@ int main (){
         }
         cout << endl;
     }    
-  //  cout << b;
     return 0;
 }
