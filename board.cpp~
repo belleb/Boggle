@@ -44,6 +44,6 @@ int main (){
     p = getBoard();
 
     // prints board
-    //cout << p; 
+    cout << p; 
     return 0;
 }
