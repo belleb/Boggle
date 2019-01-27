@@ -3,7 +3,7 @@
 #include <string>
 #include "board.cpp"
 
-pair <string, string>     new_board() {
+int     main() {
     PGconn          *conn;
     PGresult        *res;
  
@@ -26,8 +26,8 @@ pair <string, string>     new_board() {
     res = PQexec(conn,  c);
     
     string a = PQgetvalue(res, 0, 0);
-    
+    cout << a;
     PQclear(res);
     PQfinish(conn);
-    return make_pair(a,b);
+    return 0;
  }
