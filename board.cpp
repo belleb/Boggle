@@ -36,7 +36,7 @@ string getBoard(){
     return b;
 }
 
-
+/*
 int main (){
 
     srand (time(NULL)); // initializes random seed
@@ -47,3 +47,6 @@ int main (){
     //cout << p; 
     return 0;
 }
+*/
+
+
