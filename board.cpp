@@ -6,13 +6,13 @@
 using namespace std;
 
 // frequencies of letters
-char frequencies[153] = {'e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e','e',
-'t','t','t','t','t','t','t','t','t','t','t','t','t','a','a','a','a','a','a','a','a','a','a','a','a',
-'r','r','r','r','r','r','r','r','r','r','r','r','i','i','i','i','i','i','i','i','i','i','i','n','n','n',
-'n','n','n','n','n','n','n','n','o','o','o','o','o','o','o','o','o','o','o','s','s','s','s','s','s',
-'s','s','s','s','s','s','d','d','d','d','d','d','c','c','c','c','c','h','h','h','h','h','l','l','l','l','l',
-'f','f','f','f','m','m','m','m','p','p','p','p','u','u','u','u','g','g','g','y','y','y','w','w',
-'b','j','k','q','v','x','z'};
+char frequencies[153] = {'E','E','E','E','E','E','E','E','E','E','E','E','E','E','E','E','E','E','E',
+'T','T','T','T','T','T','T','T','T','T','T','T','T','A','A','A','A','A','A','A','A','A','A','A','A',
+'R','R','R','R','R','R','R','R','R','R','R','R','I','I','I','I','I','I','I','I','I','I','I','N','N','N',
+'N','N','N','N','N','N','N','N','O','O','O','O','O','O','O','O','O','O','O','S','S','S','S','S','S',
+'S','S','S','S','S','S','D','D','D','D','D','D','C','C','C','C','C','H','H','H','H','H','L','L','L','L','L',
+'F','F','F','F','M','M','M','M','P','P','P','P','U','U','U','U','G','G','G','Y','Y','Y','W','W',
+'B','J','K','Q','V','X','Z'};
 
 // gets a random letter (probability weighted by the structure of the English language) 
 char getLetter(){
