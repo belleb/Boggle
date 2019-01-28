@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+
+ <title>Boggle</title>
+ 
+ <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
+ 
+ <link href="style.css" rel = "stylesheet">
+ 
+</head>
+<body>
+ <h1>Boggle</h1>
+ <table>
+   <tbody id="board">
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+    <tr><td></td><td></td><td></td><td></td><td></td></tr>
+   </tbody>
+ </table>
+ 
+<div id="time-alert">Game ends in <span id="time"></span> minutes</div>
+ 
+ <script>
+    var board = document.getElementById("board");
+    var i = 0;
+    var s = "POIUYTREWQASDFGHJKLZXCVBN"
+    var rows = board.children;
+    for (var j=0; j<5; j++){
+        var entries = rows[j].children;
+        for (var k=0; k<5; k++){
+            var entry = entries[k];
+            entry.innerHTML = s[i];
+            i++;
+        }
+    }
+    
+    function startTimer(duration, display) {
+    var start = Date.now(),
+        diff,
+        minutes,
+        seconds;
+    function timer() {
+        // get the number of seconds that have elapsed since 
+        // startTimer() was called
+        diff = duration - (((Date.now() - start) / 1000) | 0);
+
+        // does the same job as parseInt truncates the float
+        minutes = (diff / 60) | 0;
+        seconds = (diff % 60) | 0;
+
+        minutes = minutes < 10 ? "0" + minutes : minutes;
+        seconds = seconds < 10 ? "0" + seconds : seconds;
+
+        display.textContent = minutes + ":" + seconds; 
+
+        if (diff <= 0) {
+            // add one second so that the count down starts at the full duration
+            // example 05:00 not 04:59
+            start = Date.now() + 1000;
+        }
+    };
+    // we don't want to wait a full second before the timer starts
+    timer();
+    setInterval(timer, 1000);
+}
+
+window.onload = function () {
+    var fiveMinutes = 60 * 5,
+        display = document.querySelector('#time');
+    startTimer(fiveMinutes, display);
+};
+    
+ </script>
+
+</body>
+</html>
