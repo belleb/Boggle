@@ -12,6 +12,12 @@
     font-family: 'Noto Sans', sans-serif;
     }
     table{
+    
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */      
+
     margin: 0 auto;
     text-align: center;
     border: 8px solid #114411;
@@ -27,6 +33,7 @@
     td{
     width: 75px;
     height: 75px;
+    background-image: radial-gradient(white,white,white,#fefefe,#f6f6f6,#eeeeee,#e0e0e0, #dddddd);
     }
     h1{
     text-align: center;s

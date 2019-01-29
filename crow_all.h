@@ -7876,7 +7876,7 @@ namespace crow
         }
 
         // enable_if Arg1 == request && Arg2 == response
-        // enable_if Arg1 == request && Arg2 != resposne
+        // enable_if Arg1 == request && Arg2 != response
         // enable_if Arg1 != request
 #ifdef CROW_MSVC_WORKAROUND
         template <typename Func, size_t ... Indices>
@@ -7943,7 +7943,7 @@ namespace crow
                 black_magic::CallHelper<Func, black_magic::S<crow::request, Args...>>::value , 
                 "Handler type is mismatched with URL parameters");
             static_assert(!std::is_same<void, decltype(f(std::declval<Args>()...))>::value, 
-                "Handler function cannot have void return type; valid return types: string, int, crow::resposne, crow::json::wvalue");
+                "Handler function cannot have void return type; valid return types: string, int, crow::response, crow::json::wvalue");
 
             handler_ = (
 #ifdef CROW_CAN_USE_CPP14
@@ -7968,7 +7968,7 @@ namespace crow
                 black_magic::CallHelper<Func, black_magic::S<crow::request, Args...>>::value, 
                 "Handler type is mismatched with URL parameters");
             static_assert(!std::is_same<void, decltype(f(std::declval<crow::request>(), std::declval<Args>()...))>::value, 
-                "Handler function cannot have void return type; valid return types: string, int, crow::resposne, crow::json::wvalue");
+                "Handler function cannot have void return type; valid return types: string, int, crow::response, crow::json::wvalue");
 
             handler_ = (
 #ifdef CROW_CAN_USE_CPP14
