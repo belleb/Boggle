@@ -1,6 +1,5 @@
 #include "crow_all.h"
-#include "add_entry.cpp"
-
+#include "submit_word.cpp"
 int main()
 {
     crow::SimpleApp app;
@@ -11,9 +10,29 @@ int main()
     });
     */
     
-    CROW_ROUTE(app, "/game/<string>")([](string id){
-        string board = get_board_from_id(id);
-        string time = get_time_from_id(id);
+    CROW_ROUTE(app, "/game/<string>")
+      ([](string id){
+            string board = get_board_from_id(id);
+            string time = get_time_from_id(id);
+            crow::mustache::context x;
+         
+            x["id"] = id;
+            x["letters"] = board;
+        
+            auto page = crow::mustache::load("/templates/index.html");
+            return page.render(x);
+        }
+     );
+     
+    CROW_ROUTE(app, "/game/<string>/<string>")
+      ([](string id, string word){
+            submit(word, id);
+            return word+id;
+        }
+        
+    
+        
+        
         
         //calculates time difference between game creation and now
         /*struct tm t, t1;
@@ -24,14 +43,9 @@ int main()
         t1 = t;
         */
         
-        crow::mustache::context x;
-         
-        x["id"] = id;
-        x["letters"] = board;
-        
-        auto page = crow::mustache::load("/templates/index.html");
-        return page.render(x);
-    });
+    );
+    
+  
 
     CROW_ROUTE(app, "/game")([](){
         srand (time(NULL));

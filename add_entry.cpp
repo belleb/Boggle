@@ -98,7 +98,7 @@ string get_time_from_id(string id){
 
 }
 
-bool word_already_entered(string s, string id){
+bool word_not_entered(string s, string id){
     PGconn          *conn;
     PGresult        *res;
 
@@ -135,12 +135,12 @@ bool word_already_entered(string s, string id){
         PQclear(res);
         PQclear(new_res);
         PQfinish(conn);
-        return false;
+        return true;
     }
     else{
         PQclear(res);
         PQfinish(conn);
-        return true;
+        return false;
     }
     
  
