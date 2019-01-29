@@ -109,11 +109,11 @@ bool word_already_entered(string s, string id){
                  exit(0);
     }
     
-    string query = "SELECT word FROM words WHERE board_id='";
+    string query = "SELECT word FROM words WHERE (board_id='";
     query +=id;
-    query+="' WHERE word='";
+    query+="' AND word='";
     query+= s;
-    query += "';";
+    query += "');";
     
     const char * c;
     c = query.c_str();
@@ -121,19 +121,19 @@ bool word_already_entered(string s, string id){
     
     res = PQexec(conn,c);
     
-    if (PQgetisnull(res,0,0)) {
-        query = "INSERT INTO words (board_id, word) VALUES ('";
-        query += id;
-        query += "','";
-        query += s;
-        query += "');";
+    
+    if (PQntuples(res)==0){//(PQgetisnull(res,0,0)) {
+        string new_query;
+        PGresult        *new_res;
+        new_query = "INSERT INTO words (board_id, word) VALUES ('"+ id + "','"+ s;
+        new_query += "');";
         const char * d;
-        d = query.c_str();
+        d = new_query.c_str();
     
-    
-        res = PQexec(conn,d);
+        new_res = PQexec(conn,d);
         
         PQclear(res);
+        PQclear(new_res);
         PQfinish(conn);
         return false;
     }
@@ -145,7 +145,41 @@ bool word_already_entered(string s, string id){
     
  
     
-    return output;
 
+}
+
+void update_score(int points, string id){
+    PGconn          *conn;
+    PGresult        *res;
+
+    conn = PQconnectdb("dbname=boggle user=postgres");
+ 
+    if (PQstatus(conn) == CONNECTION_BAD) {
+                 puts("We were unable to connect to the database");
+                 exit(0);
+    }
+    //get current score
+    string query = "SELECT score FROM boards WHERE board_id='"+ id+"';";
+    const char * c;
+    c = query.c_str();
+    
+    res = PQexec(conn,c);
+    
+    const char * current_score = PQgetvalue(res, 0, 0);
+    string c_score(current_score);
+    int score = std::stoi(c_score);
+    
+    //update score
+    score += points;
+    string S = std::to_string(score);
+    
+    query = "UPDATE boards SET score='" +S+ "' WHERE board_id='"+id+"';";
+    c = query.c_str();
+    res = PQexec(conn,c);
+    
+    PQclear(res);
+    PQfinish(conn);
+   
+    
 }
 
