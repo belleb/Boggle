@@ -2,7 +2,7 @@
 <html>
 <head>
 
- <title>Boggle</title>
+ <title>Thesaurus Rex</title>
  
  <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
  
@@ -36,7 +36,8 @@
     background-image: radial-gradient(white,white,white,#fefefe,#f6f6f6,#eeeeee,#e0e0e0, #dddddd);
     }
     h1{
-    text-align: center;s
+    text-align: center;
+    color: #114411;
     }
     #time-alert{
     color: red;
@@ -49,7 +50,7 @@
  </style>
 </head>
 <body>
- <h1>Boggle</h1>
+ <h1>Thesaurus Rex</h1>
  <table>
    <tbody id="board">
     <tr><td></td><td></td><td></td><td></td><td></td></tr>
@@ -59,23 +60,30 @@
     <tr><td></td><td></td><td></td><td></td><td></td></tr>
    </tbody>
  </table>
- <div id="word_box"><form action="" onsubmit="submitForm(); return false;">
+ <div id="word_box"><form action="" onsubmit="submitForm(); return false;" autocomplete = "off">
     <input id="actualword" type="text" name="word" placeholder="Enter word here" style="font-size: 18pt;text-align:center;" maxlength = "25" size ="25" >
     <input type = "hidden" name="board_ID" value="{{id}}"><br>
     <input type="submit" style="visibility: hidden; width: 0px; height:0px;margin:0 0; padding: 0px;">
  </form></div>
 <div id="time-alert">Game ends in <span id="time"></span> minutes</div>
+<div id="scoreboard">Score: <span id="score">{{score}}</span></div>
  
  <script>
     function submitForm() {
         var http = new XMLHttpRequest();
         var actualword = document.getElementById("actualword");
         http.open("GET", "http://localhost:18080/game/{{id}}/" + actualword.value, true);
-        http.send();
+        http.responseType = 'text';
         actualword.value = "";
-        http.onload = function() {
-            alert(http.responseText);
-        }
+        http.onload = function(){
+        if (http.readyState === http.DONE){
+            if (http.status === 200){
+                var new_score = http.responseText;
+                var score_area = document.getElementById("score");
+                 score_area.innerHTML = new_score;
+            }
+        }}
+        http.send();
     }
  
  
@@ -99,9 +107,15 @@
         minutes,
         seconds;
     function timer() {
-        // get the number of seconds that have elapsed since 
-        // startTimer() was called
-        diff = duration - (((Date.now() - start) / 1000) | 0);
+        // test if time is up
+        if ( ( duration - (Date.now() - start) ) <=899 ) {
+            location.reload();
+        }
+        else{
+        // get the number of seconds left
+        diff = ( ((duration - Date.now() + start) / 1000) | 0 );
+        
+        
 
         // does the same job as parseInt truncates the float
         minutes = (diff / 60) | 0;
@@ -112,21 +126,18 @@
 
         display.textContent = minutes + ":" + seconds; 
 
-        if (diff <= 0) {
-            // add one second so that the count down starts at the full duration
-            // example 05:00 not 04:59
-            start = Date.now() + 1000;
         }
+        
     };
-    // we don't want to wait a full second before the timer starts
+
     timer();
-    setInterval(timer, 1000);
+    setInterval(timer, 100);
 }
 
 window.onload = function () {
-    var fiveMinutes = 60 * 5,
+    var duration = {{time_diff}},
         display = document.querySelector('#time');
-    startTimer(fiveMinutes, display);
+    startTimer(duration, display);
 };
     
  </script>

@@ -1,6 +1,6 @@
 #include <iostream>
 #include <string>
-int const MIN_WORD=3;
+int const MIN_WORD=2;
 
 using namespace std;
 

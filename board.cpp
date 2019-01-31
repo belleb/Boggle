@@ -25,14 +25,15 @@ char getLetter(){
 // produces random board
 string getBoard(){
 
-    static string b;
-    
+    string b;
+    b = "";
     int i, j;
     for (i = 0; i < 5; i++){
         for (j = 0; j < 5; j++){
             b += getLetter();
         }
-    }    
+    }
+       
     return b;
 }
 
