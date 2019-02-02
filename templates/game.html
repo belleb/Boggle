@@ -1,10 +1,10 @@
 <!doctype html>
 <html>
 <head>
-  <meta charset = "utf-8">
+  <meta charset="utf-8">
   <title>Thesaurus Rex</title>
-  <meta name = "author" content = "Isabel Leal">
-  <meta name = "description" content = "Single player word game">
+  <meta name="author" content="Isabel Leal">
+  <meta name="description" content="Single player word game">
  
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
@@ -77,10 +77,21 @@
       display: inline-block;
       border-radius: 5px;
       padding: 5px;
+      margin: 3px;
+      cursor: pointer;
+    }
+    #language_area img{
+      width: 32px;
+      height: 21px;
+      vertical-align: bottom;
     }
     #language_area div:hover{
       background-color: #eeeeee;
       color: #114411;
+    }
+    #starting_buttons{
+      text-align: center;
+      margin: 4px auto;
     }
     #actualword{
       font-size: 18pt;
@@ -104,10 +115,6 @@
   <h1>
     <a id="header_link" href="">Thesaurus Rex</a>
   </h1>
-  
-  <div id="language_area">
-    <div id="current_language" style="display:none;">{{language}}</div>
-  </div>
   
   <table>
     <tbody id="board">
@@ -140,12 +147,10 @@
  
   <script>
     var address = 'http://localhost:18080';
+    var language = "{{language}}";
     
     function applyLanguage()
-    {
-      // get current language
-      var language = document.getElementById("current_language").textContent;
-      
+    { 
       // header link
       var header_link = document.getElementById("header_link");
       header_link.href = address + "/" + language;
@@ -167,12 +172,10 @@
     
     function submitForm() 
     {
-      // get current language
-      var language = document.getElementById("current_language").textContent;
-      
       // get word to be submitted
       var actualword = document.getElementById("actualword");
       var normalized_word = actualword.value.normalize('NFD').replace(/[\u0300-\u036f]/g, "");
+      
       // prepare request
       var http = new XMLHttpRequest();
       http.open("GET", address + "/" + language + "/game/{{id}}/" + normalized_word, true);
