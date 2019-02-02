@@ -1,7 +1,7 @@
 #include "crow_all.h"
 #include "find_word.cpp"
 #include "submit_word.cpp"
-long int const max_time = 20;
+long int const max_time = 300;
 long int const BI = 1000000000;
 
 
