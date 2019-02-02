@@ -156,6 +156,44 @@ string get_score_from_id(string id){
 
 }
 
+string get_ranking_from_id(string id, string language){
+    PGconn          *conn;
+    PGresult        *res;
+
+    conn = PQconnectdb("dbname=rex user=postgres");
+ 
+    if (PQstatus(conn) == CONNECTION_BAD) {
+                 puts("We were unable to connect to the database");
+                 exit(0);
+    }
+    
+    
+    string query = "SELECT ranking FROM (SELECT ROW_NUMBER() OVER (ORDER BY score DESC) AS ranking, board_id FROM boards WHERE language=$2) sub WHERE board_id=$1";
+    const char * c = query.c_str();
+    
+    
+    const char * values[2];
+    values[0] = id.c_str();
+    values[1] = language.c_str();
+
+    res = PQexecParams(conn,c,2, NULL, values, NULL, 0, 0);
+    
+    
+    if (PQntuples(res)==0)  {
+        PQclear(res);
+        PQfinish(conn);
+        return "Not found";
+    }else{
+        const char * ranking = PQgetvalue(res, 0, 0);
+        string output(ranking);
+     
+        PQclear(res);
+        PQfinish(conn);
+        return output;
+    }
+
+}
+
 bool word_not_entered(string s, string id){
     PGconn          *conn;
     PGresult        *res;

@@ -8,10 +8,11 @@ long int const BI = 1000000000;
 using Clock = std::chrono::high_resolution_clock;
 int main()
 {
-    static string address = "http://localhost:18080";
+    static string address = "http://thesaurus-rex.org"; //"http://localhost:18080";
     //Creates dictionaries
     static Dictionary_en d_en;
     static Dictionary_pt d_pt;
+    
     
     crow::SimpleApp app;
     crow::mustache::set_base(".");
@@ -69,6 +70,7 @@ int main()
                 auto page = crow::mustache::load("/templates/game.html");
                 return page.render(x);
             }else{ //game ended         
+                x["ranking"] = get_ranking_from_id(id,language);
                 auto page = crow::mustache::load("/templates/score.html");
                 return page.render(x);
             }
@@ -125,8 +127,7 @@ int main()
     });
     
     
-    
-    app.port(18080).multithreaded().run();
+    app.port(80).multithreaded().run();//    app.port(18080).multithreaded().run();
 }
 
 // g++ server.cpp -o server -I /usr/include/postgresql/ -L /usr/lib/ -lm -lpq -pthread -lboost_system -std=c++11
