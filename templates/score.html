@@ -5,6 +5,24 @@
   <title>Thesaurus Rex</title>
   <meta name="author" content="Isabel Leal">
   <meta name="description" content="Single player word game">
+  
+  <!-- –––––––––––––––––––––––––––––––––––––
+   Thesaurus Rex is © 2019 Isabel Leal
+   https://isabelleal.org
+   
+   See the code behind this site at 
+   https://github.com/belleb/Thesaurus-Rex
+  –––––––––––––––––––––––––––––––––––––– -->
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-133684021-1"></script>
+  <script>
+   window.dataLayer = window.dataLayer || [];
+   function gtag(){dataLayer.push(arguments);}
+   gtag('js', new Date());
+
+   gtag('config', 'UA-133684021-1');
+  </script>
  
   <link href="https://fonts.googleapis.com/css?family=Noto+Sans" rel="stylesheet">
 
@@ -107,17 +125,13 @@
     #play_again_button{
       padding: 2px;
     }
-</style>
+  </style>
 </head>
 <body onload="doEverything();">
 
   <h1>
     <a id="header_link" href="">Thesaurus Rex</a>
   </h1>
-  
-  <div id="language_area">
-    <div id="current_language" style="display:none;">{{language}}</div>
-  </div>
   
   <table>
     <tbody id="board">
