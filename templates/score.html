@@ -153,6 +153,10 @@
     
     function applyLanguage()
     {
+      // header link
+      var header_link = document.getElementById("header_link");
+      header_link.href = address + "/" + language;
+      
       // ranking text
       var ranking_text = document.getElementById("ranking_text");
       ranking_text.innerHTML = (language === 'pt') ? "Ranking" : "Ranking";
