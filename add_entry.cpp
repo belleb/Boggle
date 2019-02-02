@@ -5,10 +5,11 @@
 #include <chrono>
 using Clock = std::chrono::high_resolution_clock;
 
-string new_id() {
+//creates new id and inserts basic creation data in the database
+string new_id(string language) {
     PGconn          *conn;
     PGresult        *res;
-
+    
     conn = PQconnectdb("dbname=rex user=postgres");
     
     //tests connection
@@ -16,20 +17,26 @@ string new_id() {
                  puts("We were unable to connect to the database");
                  exit(0);
     }
+    
     //finds the time of creation of the board
     auto time = Clock::now();
     long int time_lg =  std::chrono::duration_cast<std::chrono::nanoseconds>(time.time_since_epoch()).count();
     string time_str = std::to_string(time_lg);
     
     //finds letters for the board
-    string b = getBoard(); 
+    string b = getBoard(language); 
     
     //SQL query
-    string query = "INSERT INTO boards (letters, time) VALUES ( '" + b + "','" + time_str + "') RETURNING board_id;";
-    
+    string query = "INSERT INTO boards (letters, time,language) VALUES ( '" + b + "','" + time_str + "',$1) RETURNING board_id;";
     const char * c = query.c_str();
-    res = PQexec(conn,  c);
+    //use language as a parameter 
+    const char * values[1];
+    values[0] = language.c_str();
     
+    //runs query
+    res = PQexecParams(conn,c,1, NULL, values, NULL, 0, 0);
+
+    //gets the id 
     string id(PQgetvalue(res, 0, 0));
     
     PQclear(res);
@@ -37,6 +44,7 @@ string new_id() {
     return id;
  }
 
+//given id, gets board
 string get_board_from_id(string id){
     PGconn          *conn;
     PGresult        *res;
