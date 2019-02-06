@@ -144,12 +144,10 @@
   </table>
 
   <div id="final_score">
-    <span id="final_score_text"></span>:
-    <span id="score">{{score}}</span>
+    <span id="final_score_text"></span>
   </div>
   <div id="ranking">
-    <span id="ranking_text"></span>:
-    <span id="ranking">{{ranking}}</span>
+    <span id="ranking_text"></span>
   </div>
 
   <div id="play_again">
@@ -173,11 +171,11 @@
       
       // ranking text
       var ranking_text = document.getElementById("ranking_text");
-      ranking_text.innerHTML = (language === 'pt') ? "Ranking" : "Ranking";
+      ranking_text.innerHTML = (language === 'pt') ? "Ranking: {{ranking}}" : "Ranking: {{ranking}}";
       
       // final score text
       var final_score_text = document.getElementById("final_score_text");
-      final_score_text.innerHTML = (language === 'pt') ? "Pontuação final" : "Final score";
+      final_score_text.innerHTML = (language === 'pt') ? "Pontuação final: {{score}}" : "Final score: {{score}}";
       
       // play again button text
       var play_again_button = document.getElementById("play_again_button");
