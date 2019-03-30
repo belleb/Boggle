@@ -1,10 +1,10 @@
-#include "simplify_word.cpp"
 #include <iostream>
 #include <set>
 #include <fstream>
 #include <locale>
 #include <codecvt>
-
+#include "simplify_word.cpp"
+  
 using namespace std;
 
 struct Dictionary_en {

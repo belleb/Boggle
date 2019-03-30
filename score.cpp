@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 
-int score(std::string word){
+int score(std::string word) {
   int l = word.length();
-  if (l >= 26){
+  if (l >= 26) {
     throw std::invalid_argument("Word is too long");
   }
+  // The value of a word is given by the Fibonacci sequence
   int values[26] = {0, 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610, 987, 1597, 2584, 4181, 6765, 10946, 17711, 28657, 46368};
   return values[l];
 }

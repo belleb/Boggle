@@ -24,29 +24,28 @@ char frequencies_pt[106] = {'A','A','A','A','A','A','A','A','A','A','A','A','A',
 'P','P','P','V','V','G','G','H','H','F','B','J','Q','X','Z'};
 
 // gets a random letter (probability weighted depending on the language) 
-char getLetter(string language){
-    int letter_index;
-    if (language == "en"){
-        letter_index = rand() % 205; //get index
-        return frequencies_en[letter_index];
-    }else if (language == "pt"){
-        letter_index = rand() % 106; //get index
-        return frequencies_pt[letter_index];
-    }
+char getLetter(string language) {
+  int letter_index;
+  if (language == "en") {
+    letter_index = rand() % 205; //get index
+    return frequencies_en[letter_index];
+  } else if (language == "pt") {
+    letter_index = rand() % 106; //get index
+    return frequencies_pt[letter_index];
+  }
 }
 
 // produces random board
-string getBoard(string language){
-    string b;
-    b = "";
-    int i, j;
-    for (i = 0; i < 5; i++){
-        for (j = 0; j < 5; j++){
-            b += getLetter(language);
-        }
+string getBoard(string language) {
+  string b;
+  b = "";
+  int i, j;
+  for (i = 0; i < 5; i++) {
+    for (j = 0; j < 5; j++) {
+      b += getLetter(language);
     }
-       
-    return b;
+  }
+  return b;
 }
 
 
