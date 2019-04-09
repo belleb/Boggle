@@ -78,11 +78,12 @@ string get_board_from_id(string id) {
   res = PQexecParams(conn, c, 1, NULL, values, NULL, 0, 0);
 
   // If the database doesn't find a result, produce an error message
+  string output;
   if (PQntuples(res)==0) {
-    string output = BOARD_MISSING;
+    output = BOARD_MISSING;
   } else {
     const char* letters = PQgetvalue(res, 0, 0);
-    string output(letters);
+    output = letters;
   }
 
   // Close database connection and return desired output
@@ -110,11 +111,12 @@ string get_time_from_id(string id) {
   res = PQexecParams(conn, c, 1, NULL, values, NULL, 0, 0);
 
   // If the database doesn't find a result, produce an error message
+  string output;
   if (PQntuples(res)==0) {
-    string output = BOARD_MISSING;
+    output = BOARD_MISSING;
   } else {
     const char* time = PQgetvalue(res, 0, 0);
-    string output(time);
+    output = time;
   }
 
   // Close database connection and return desired output
@@ -142,11 +144,12 @@ string get_score_from_id(string id) {
   res = PQexecParams(conn, c, 1, NULL, values, NULL, 0, 0);
 
   // If the database doesn't find a result, produce an error message
+  string output;
   if (PQntuples(res) == 0) {
-    string output = BOARD_MISSING;
+    output = BOARD_MISSING;
   } else {
     const char* score = PQgetvalue(res, 0, 0);
-    string output(score);
+    output = score;
   }
 
   // Close database connection and return desired output
@@ -176,11 +179,12 @@ string get_ranking_from_id(string id, string language) {
   res = PQexecParams(conn, c, 2, NULL, values, NULL, 0, 0);
 
   // If the database doesn't find a result, produce an error message
+  string output;
   if (PQntuples(res) == 0) {
-    string output = BOARD_MISSING;
+    output = BOARD_MISSING;
   } else {
     const char* ranking = PQgetvalue(res, 0, 0);
-    string output(ranking);
+    output = ranking;
   }
 
   // Close database connection and return desired output
@@ -210,6 +214,7 @@ bool word_not_entered(string word, string id) {
   res = PQexecParams(conn, c, 2, NULL, values, NULL, 0, 0);
 
   // If the word hasn't been played, do the necessary update 
+  bool output;
   if (PQntuples(res) == 0) {
     // Clear the current result
     PQclear(res);
@@ -253,8 +258,9 @@ string update_score(int points, string id) {
   res = PQexecParams(conn, c, 1, NULL, values, NULL, 0, 0);
 
   // If the database doesn't find a result, produce an error message
+  string output;
   if (PQntuples(res) == 0) {
-    string output = BOARD_MISSING;
+    output = BOARD_MISSING;
   } else {
     // Get the current score and clear the current result
     const char* current_score = PQgetvalue(res, 0, 0);
@@ -264,10 +270,10 @@ string update_score(int points, string id) {
     string c_score(current_score);
     int score = std::stoi(c_score);
     score += points;
-    string output = std::to_string(score);
+    output = std::to_string(score);
 
     // Constructs parametrized SQL query to update score of board
-    query = "UPDATE boards SET score = '" + S + "' WHERE board_id = $1;";
+    query = "UPDATE boards SET score = '" + output + "' WHERE board_id = $1;";
     const char* d = query.c_str();
 
     // Runs the query

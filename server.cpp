@@ -77,12 +77,13 @@ int main()
     // If the game has not ended yet, display active game board
     if (difftime < max_time*BI){ 
       auto page = crow::mustache::load("/templates/game.html");
+      return page.render(x);
     } else {
     // If the game has ended, display final score and ranking information
       x["ranking"] = get_ranking_from_id(id, language);
       auto page = crow::mustache::load("/templates/score.html");
+      return page.render(x);
     }
-    return page.render(x);
   });
 
   // API for submitting a word
